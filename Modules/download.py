@@ -41,8 +41,10 @@ def download(path, max_retries=5):
         .text.replace(".", "._")
     )
 
+    # empty title is possible such as /view/30700520/
     title = sanitize_filename(
-        str(s.find(class_="submission-title").find("p").contents[0])
+        str(s.find(class_="submission-title").find("p").contents[0] 
+            if len(s.find(class_="submission-title").find("p").contents) > 0 else 'Untitled')
     )
     view_id = int(path.split("/")[-2:-1][0])
 
